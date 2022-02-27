@@ -90,13 +90,13 @@ for result in results:
     
     # extract sample url
     sample = browser.links.find_by_text('Sample').first
-    img_url = sample['href']
+    img_url_hemi = sample['href']
     
     # extract title
     title = browser.find_by_css('h2.title').text
     
     comb={
-        'img_url': img_url,
+        'img_url_hemi': img_url_hemi,
         'title': title 
          }
     hemisphere_image_urls.append(comb)

@@ -12,13 +12,13 @@ def scrape_all():
     browser = Browser('chrome', **executable_path, headless=True)
 
     news_title, news_p = mars_news(browser)
+    img_url_hemi, title = hemisphere_data()
 
     # Run all scraping functions and store results in a dictionary
     data = {
-        'img_url': img_url,
-        'title': title, 
-        "last_modified": dt.datetime.now()
-    }
+      "img_url_hemi": img_url_hemi,
+      'title': title
+        }
 
     # Stop webdriver and return data
     browser.quit()
@@ -97,6 +97,10 @@ def mars_facts():
 
 def hemisphere_data():
     # scrape hemisphere 
+    # Initiate headless driver for deployment
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=True)
+    
     # 1. Use browser to visit the URL 
     url = 'https://marshemispheres.com/'
     browser.visit(url)
@@ -118,13 +122,13 @@ def hemisphere_data():
         
         # extract sample url
         sample = browser.links.find_by_text('Sample').first
-        img_url = sample['href']
+        img_url_hemi = sample['href']
         
         # extract title
         title = browser.find_by_css('h2.title').text
         
         comb={
-            'img_url': img_url,
+            'img_url_hemi': img_url_hemi,
             'title': title 
             }
         hemisphere_image_urls.append(comb)
